@@ -1,0 +1,40 @@
+body {
+font-family: Tahoma, Verdana;
+font-size: 10pt;
+}
+table {
+font-family: Tahoma, Verdana;
+font-size: 10pt;
+}
+input[type="text"]:focus, textarea:focus {
+background-color: yellow;
+}
+input.price {
+text-align: right;
+width: 4.5em;
+}
+input.amount {
+text-align: right;
+width: 4.5em;
+}
+.editors span.label:after {
+content: ": ";
+}
+.editors>div>span {
+display: block;
+margin-bottom: 1ex;
+}
+.displays span.label:after {
+content: ": ";
+}
+.displays>div>span {
+display: block;
+margin-bottom: 1ex;
+}
+.menu .item>* {
+display: none;
+}
+.menu .item:hover>* {
+display: block;
+position: absolute;
+}
