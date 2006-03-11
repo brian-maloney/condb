@@ -1,0 +1,24 @@
+div.address_editor span.straddr input {
+display: block;
+position: relative;
+left: 7em;
+top: -1em;
+}
+div.address_editor span.straddr input.addr3 {
+margin-bottom: -1em;
+}
+div.address_editor input.description {
+width: 6em;
+}
+div.address_editor input.state {
+width: 2.2em;
+}
+div.address_editor input.zip {
+width: 6.5em;
+}
+div.address_editor input.country {
+width: 6em;
+}
+div.address_editor input.validfrom, input.validto, input.lastcheck {
+width: 5em;
+}
