@@ -7,9 +7,9 @@ var $results;
 var $dbname;
 
 function dbconn() {
-	$this->dbname = "condb";
-	$this->handle = mysqli_connect("127.0.0.1", "tcon", "elodie");
-	if (!$this->handle) trigger_error("Could not connect to MySQL database", E_USER_ERROR);
+	$this->dbname = "dbname";
+	$this->handle = mysqli_connect("127.0.0.1", "username", "password");
+	if (!$this->handle) trigger_error("Could not connect to database", E_USER_ERROR);
 	mysqli_select_db($this->handle, $this->dbname);
 }
 
