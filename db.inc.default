@@ -1,0 +1,63 @@
+<?php
+
+class dbconn {
+
+var $handle;
+var $results;
+var $dbname;
+
+function dbconn() {
+	$this->dbname = "condb";
+	$this->handle = mysqli_connect("127.0.0.1", "tcon", "elodie");
+	if (!$this->handle) trigger_error("Could not connect to MySQL database", E_USER_ERROR);
+	mysqli_select_db($this->handle, $this->dbname);
+}
+
+function query($qstring) {
+	if ($GLOBALS['dbtrace']) echo "DB Query: $qstring<br>\n";
+	$newkey = md5(microtime().posix_getpid());
+	$this->results[$newkey] = array("query" => $qstring, "result" => mysqli_query($this->handle, $qstring));
+	if ($this->results[$newkey]["result"]) {
+		if (strcasecmp(strtok($this->results[$newkey]["query"], " "), "SELECT")) $this->results[$newkey]["rows"] = mysqli_affected_rows($this->handle);
+		else $this->results[$newkey]["rows"] = mysqli_num_rows($this->results[$newkey]["result"]);
+		if (!strcasecmp(strtok($this->results[$newkey]["query"], " "), "INSERT")) $this->results[$newkey]["newid"] = mysqli_insert_id($this->handle);
+		else $this->results[$newkey]["newid"] = 0;
+	}
+	else $this->results[$newkey]["rows"] = 0;
+	return $newkey;
+}
+
+function fetch_row($resultid, $rtype = MYSQL_BOTH) {
+	return mysqli_fetch_array($this->results[$resultid]["result"], $rtype);
+}
+
+function row_count($resultid) {
+	return $this->results[$resultid]["rows"];
+}
+
+function new_id($resultid) {
+	return $this->results[$resultid]["newid"];
+}
+
+function delete_query($resultid) {
+	unset($this->results[$resultid]);
+}
+
+function escape($query) {
+	return mysqli_real_escape_string ($this->handle, $query);
+}
+
+function get_fields($table) {
+	if ($GLOBALS['dbtrace']) echo "DB Getfields: $table<br>\n";
+	$query = mysqli_query($this->handle, "SELECT * FROM $table LIMIT 1");
+
+	$retval = array();
+
+	$finfo = mysqli_fetch_fields($query);
+	foreach ($finfo as $field) $retval[] = $field->name;
+	return $retval;
+}
+
+}
+
+?>
