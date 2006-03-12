@@ -24,7 +24,7 @@ function __construct($loadid = 0) {
 	foreach($_SESSION['classes'] as $classkey => $class) {
 		if (isset($GLOBALS['postobjs'][$classkey])) foreach($GLOBALS['postobjs'][$classkey] as $itemkey => $item) if ($item->fields['ca'] == $this->obj_id) $this->stuff[$classkey][$itemkey] =& $GLOBALS['postobjs'][$classkey][$itemkey];
 		if (($class['table'] != "") && ($this->in_db)) {
-			if ($class['many']) $stuffqry = $GLOBALS['db']->query("SELECT {$class['table']}.* FROM {$class['table']} JOIN many ON {$class['table']}.id = many.fromid WHERE many.fromtable = '{$class['table']}' AND many.totable = 'CAs' AND many.toid = {$this->obj_id} AND transactions.con = {$_SESSION['conid']}");
+			if ($class['many']) $stuffqry = $GLOBALS['db']->query("SELECT {$class['table']}.* FROM {$class['table']} JOIN many ON {$class['table']}.id = many.fromid WHERE many.fromtable = '{$class['table']}' AND many.totable = 'CAs' AND many.toid = {$this->obj_id} AND {$class['table']}.con = {$_SESSION['conid']}");
 			else $stuffqry = $GLOBALS['db']->query("SELECT id FROM {$class['table']} WHERE CA = {$this->obj_id} AND con = {$_SESSION['conid']}");
 			while ($row = $GLOBALS['db']->fetch_row($stuffqry)) {
 				if (!isset($this->stuff[$classkey][$row['id']])) eval("\$this->stuff[\$classkey][{$row['id']}] = new {$classkey}({$row['id']});");
