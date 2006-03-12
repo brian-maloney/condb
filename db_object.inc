@@ -102,7 +102,7 @@ function section($name, $label, $code) {
 function editor() {
 	$basename = get_class($this) . '_' . $this->obj_id;
 	$html = '<div id="' . $basename . '_editor" class="' . get_class($this) . '_editor">';
-	$html .= '<input type="hidden" name="editobj_' . $basename . '" value="true">' . "\n";
+	$html .= '<input type="hidden" name="editobj_' . $basename . '" value="true">' . "</input>\n";
 	foreach($this->fields as $fieldname => $fieldval) {
 		if ($fieldname != "id") $html .= $this->section($fieldname, ucwords(strtolower($fieldname)), $this->textbox($fieldname)) . "\n";
 	}
@@ -112,7 +112,7 @@ function editor() {
 
 function display() {
 	$basename = get_class($this) . '_' . $this->obj_id;
-	$html = '<div id="' . $basename . '_display" class="' . get_class($this) . '_display">' . "\n";
+	$html = '<div id="' . $basename . '_display" class="' . get_class($this) . '_display">' . "</input>\n";
 	foreach($this->fields as $fieldname => $fieldval) {
 		if ($fieldname != "id") $html .= $this->section($fieldname, ucwords(strtolower($fieldname)), $fieldval) . "\n";
 	}
@@ -122,7 +122,7 @@ function display() {
 
 function display_hidden() {
 	$basename = get_class($this) . '_' . $this->obj_id;
-	$html .= '<input type="hidden" name="editobj_' . $basename . '" value="true">' . "\n";
+	$html .= '<input type="hidden" name="editobj_' . $basename . '" value="true">' . "</input>\n";
 	foreach($this->fields as $fieldname => $fieldval) {
 		if ($fieldname != "id") $html .= $this->hidden($fieldname);
 	}
@@ -132,18 +132,18 @@ function display_hidden() {
 function textbox($field, $size = NULL) {
 	$basename = get_class($this) . '_' . $this->obj_id;
 	$sizefield = is_null($size) ? "" : " size=\"$size\"";
-	return "<input type=\"text\"$sizefield class=\"$field\" name=\"${basename}_$field\" value=\"" . htmlspecialchars($this->fields[$field]) . "\">\n";
+	return "<input type=\"text\"$sizefield class=\"$field\" name=\"${basename}_$field\" value=\"" . htmlspecialchars($this->fields[$field]) . "\"></input>\n";
 }
 
 function hidden($field) {
 	$basename = get_class($this) . '_' . $this->obj_id;
-	return "<input type=\"hidden\" name=\"${basename}_$field\" value=\"" . htmlspecialchars($this->fields[$field]) . "\">\n";
+	return "<input type=\"hidden\" name=\"${basename}_$field\" value=\"" . htmlspecialchars($this->fields[$field]) . "\"></input>\n";
 }
 
 function checkbox($field) {
 	$basename = get_class($this) . '_' . $this->obj_id;
 	$curval = intval($this->fields[$field]) ? "checked" : "";
-	return "<input type=\"checkbox\" class=\"$field\" name=\"${basename}_$field\" $curval>\n";
+	return "<input type=\"checkbox\" class=\"$field\" name=\"${basename}_$field\" $curval></input>\n";
 }
 
 function textarea($field) {
