@@ -365,7 +365,7 @@ if (count($ca->addresses) > 0) {
 <div class="header">Purchased Items</div>
 <div class="controls">[<span class="menu"><span class="item">+<div id="stuffmenu"><?
 foreach($_SESSION['classes'] as $class) echo '<div class="item" onclick="document.getElementById(\'stuff\').appendChild(new' . strtolower($class['singular']) . '()); updateTotal()">' . $class['singular'] . '</div>';
-?></div></span></span>] [<span class="help">?<span>This window displays the current items purchased for the current convention by the current Convention Attendee.  You may add purchases of any type with the plus button.</span></span>]</div>
+?><div class="item" onclick="document.getElementById('stuff').appendChild(linktranslist())">Link Trans.</div></div></span></span>] [<span class="help">?<span>This window displays the current items purchased for the current convention by the current Convention Attendee.  You may add purchases of any type with the plus button.</span></span>]</div>
 <div class="content" id="stuff">
 <div style="width: 100%; text-align: right; position: relative; right: 1.8em; font-weight: bold; border-top: none">Price</div>
 <?php

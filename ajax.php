@@ -18,6 +18,14 @@ case "new_obj_editor":
 	eval("\$newobj = new " . $_GET['data']);
 	echo preg_replace("@<div[^>]*?>(.*)</div>$@i", '$1', str_replace("\n", '', $newobj->editor()));
 	echo "</data>";
+	break;
+case "transaction_picker":
+	echo '<data><select id="transid" style="text-align: right">';
+	$translist = $GLOBALS['db']->query("SELECT id,paidby,amount FROM transactions WHERE con = {$_SESSION['conid']} ORDER BY id DESC");
+	while ($row = $GLOBALS['db']->fetch_row($translist)) {
+		echo "<option value=\"{$row['id']}\">{$row['paidby']}&#160;&#160;&#160;&#160;&#160;&#160;&#36;{$row['amount']}</option>&#160;&#160;";
+	}
+	echo '</select>&#160;&#160;<input type="button" value="Link Transaction" onClick="linktransaction()"></input></data>';
 }
 
 echo "</ajax>";
