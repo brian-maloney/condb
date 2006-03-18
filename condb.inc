@@ -57,7 +57,7 @@ function load_object($objname, $table, $loadphp = false, $loadjs = false) {
 }
 
 $GLOBALS['db'] = new dbconn();
-$GLOBALS['dbtrace'] = true;
+$GLOBALS['dbtrace'] = false;
 
 if (!isset($_SESSION['conid'])) list($_SESSION['conid']) = $GLOBALS['db']->fetch_row($GLOBALS['db']->query("SELECT id FROM cons WHERE NOT active = 0"));
 
