@@ -29,7 +29,6 @@ function editor() {
 	$html .= $this->section("paidto", "Paid To", $this->textbox('paidto'));
 	$html .= "<span style=\"display: block; padding-top: 0.5em\">";
 	$html .= $this->section("details", "Details", $this->textbox('details'));
-	//$html .= "&nbsp;&nbsp;&nbsp;";
 	$html .= "&#160;&#160;&#160;";
 	$html .= $this->section("notes", "Notes", $this->textbox('notes'));
 	$html .= "</span>";
