@@ -44,5 +44,10 @@ function readvals() {
 	$this->fields['amount'] = ereg_replace("[^0-9.]", "", $this->fields['amount']);
 }
 
+function save() {
+	unset($this->fields['ca']);
+        parent::save();
+}
+
 }
 ?>
