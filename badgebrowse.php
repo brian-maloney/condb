@@ -61,7 +61,7 @@ else {
 <table>
 <tr><th>Badge Type</th><th>Count</th><th>Total</th></tr>
 <?php
-$countqry = $GLOBALS['db']->query("SELECT Count(badges.badgeno) AS NumOfBadges, badges.type AS BadgeType, SUM(badges.price) AS TypeTotal FROM badges WHERE con = {$_SESSION['conid']} GROUP BY badges.type ORDER BY NumOfBadges");
+$countqry = $GLOBALS['db']->query("SELECT Count(badges.badgeno) AS NumOfBadges, badges.type AS BadgeType, SUM(badges.price) AS TypeTotal FROM badges WHERE con = {$_SESSION['conid']} GROUP BY badges.type ORDER BY badges.type");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {
 	echo "<tr><td><a href=\"badgebrowse.php?btype={$row['BadgeType']}\">" . $_SESSION['db_enums']['badgetypes'][$row['BadgeType']]['name'] . "</a></td><td>{$row['NumOfBadges']}</td><td>\${$row['TypeTotal']}</td></tr>\n";
 }
