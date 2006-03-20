@@ -63,11 +63,11 @@ else {
 <table>
 <tr><th>Merchandise Type</th><th>Count</th><th>Total</th></tr>
 <?php
-$countqry = $GLOBALS['db']->query("SELECT SUM(merchandise.qty) AS NumOfItems, merchandise.type AS MerchType, SUM(merchandise.price) AS TypeTotal FROM merchandise WHERE con = {$_SESSION['conid']} GROUP BY merchandise.type ORDER BY NumOfItems");
+$countqry = $GLOBALS['db']->query("SELECT SUM(merchandise.qty) AS NumOfItems, merchandise.type AS MerchType, SUM(merchandise.price) AS TypeTotal FROM merchandise WHERE con = {$_SESSION['conid']} GROUP BY merchandise.type ORDER BY merchandise.type");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {
 	echo "<tr><td><a href=\"merchbrowse.php?mtype={$row['MerchType']}\">" . $_SESSION['db_enums']['merchtypes'][$row['MerchType']]['name'] . "</a></td><td>{$row['NumOfItems']}</td><td>\${$row['TypeTotal']}</td></tr>\n";
 }
-$countqry = $GLOBALS['db']->query("SELECT Count(merchandise.id) AS NumOfItems, SUM(merchandise.price) as Total FROM merchandise where con = {$_SESSION['conid']} ORDER BY NumOfItems");
+$countqry = $GLOBALS['db']->query("SELECT SUM(merchandise.qty) AS NumOfItems, SUM(merchandise.price) as Total FROM merchandise where con = {$_SESSION['conid']} ORDER BY NumOfItems");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {
 	echo "<tr><td><b>Total</b></td><td><b>{$row['NumOfItems']}</b></td><td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\${$row['Total']}</b></td></tr>\n";
 }
