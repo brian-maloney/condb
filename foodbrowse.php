@@ -40,6 +40,7 @@ padding-right: 1em;
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	float: left;
 }
 </style>
 </head>
@@ -47,7 +48,21 @@ table {
 <body>
 <h1>Food Browser</h1>
 <?php
-	$foodqry = $GLOBALS['db']->query("SELECT CAs.id, CAs.first, CAs.middle, CAs.last, food.price FROM CAs INNER JOIN food ON CAs.id = food.ca WHERE food.con = {$_SESSION['conid']} ORDER BY food.price ASC, CAs.last");
+$foodqry = $GLOBALS['db']->query("SELECT CAs.id, CAs.first, CAs.middle, CAs.last, food.price FROM CAs INNER JOIN food ON CAs.id = food.ca WHERE food.con = {$_SESSION['conid']} AND food.price = 0.00 ORDER BY food.price ASC, CAs.last");
+?>
+<table style="margin-right: 5em">
+<tr><th colspan="2">Owner</th><th>Price</th></tr>
+<?php
+while($row = $GLOBALS['db']->fetch_row($foodqry)) {
+	echo "<tr><td colspan=\"2\"><a href=\"caedit.php?ca_id={$row['id']}\">{$row['first']} {$row['middle']} {$row['last']}</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;\${$row['price']}</td></tr>\n";
+}
+$countqry = $GLOBALS['db']->query("SELECT Count(food.id) AS NumOfItems, SUM(food.price) as Total FROM food WHERE con = {$_SESSION['conid']} AND food.price = 0.00 ORDER BY NumOfItems");
+while($row = $GLOBALS['db']->fetch_row($countqry)) {
+        echo "<tr><td><b>Total</b></td><td><b>{$row['NumOfItems']}</b></td><td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\${$row['Total']}</b></td></tr>\n";
+	}
+echo "</table>";
+
+$foodqry = $GLOBALS['db']->query("SELECT CAs.id, CAs.first, CAs.middle, CAs.last, food.price FROM CAs INNER JOIN food ON CAs.id = food.ca WHERE food.con = {$_SESSION['conid']} AND food.price <> 0.00 ORDER BY food.price ASC, CAs.last");
 ?>
 <table>
 <tr><th colspan="2">Owner</th><th>Price</th></tr>
@@ -55,11 +70,12 @@ table {
 while($row = $GLOBALS['db']->fetch_row($foodqry)) {
 	echo "<tr><td colspan=\"2\"><a href=\"caedit.php?ca_id={$row['id']}\">{$row['first']} {$row['middle']} {$row['last']}</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;\${$row['price']}</td></tr>\n";
 }
-$countqry = $GLOBALS['db']->query("SELECT Count(food.id) AS NumOfItems, SUM(food.price) as Total FROM food where con = {$_SESSION['conid']} ORDER BY NumOfItems");
+$countqry = $GLOBALS['db']->query("SELECT Count(food.id) AS NumOfItems, SUM(food.price) as Total FROM food WHERE con = {$_SESSION['conid']} AND food.price <> 0.00 ORDER BY NumOfItems");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {
         echo "<tr><td><b>Total</b></td><td><b>{$row['NumOfItems']}</b></td><td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\${$row['Total']}</b></td></tr>\n";
 	}
 echo "</table>";
+
 
 require("menu.inc");
 ?>
