@@ -21,7 +21,7 @@ case "new_obj_editor":
 	break;
 case "transaction_picker":
 	echo '<data><select id="transid" style="text-align: right">';
-	$translist = $GLOBALS['db']->query("SELECT id,paidby,amount FROM transactions WHERE con = {$_SESSION['conid']} ORDER BY id DESC");
+	$translist = $GLOBALS['db']->query("SELECT id,paidby,amount FROM transactions WHERE con = {$_SESSION['conid']} ORDER BY updatetime DESC");
 	while ($row = $GLOBALS['db']->fetch_row($translist)) {
 		echo "<option value=\"{$row['id']}\">{$row['paidby']}&#160;&#160;&#160;&#160;&#160;&#160;&#36;{$row['amount']}</option>&#160;&#160;";
 	}
