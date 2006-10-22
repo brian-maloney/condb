@@ -65,11 +65,10 @@ if (!isset($_SESSION['classes'])) {
 	$stuffqry = $GLOBALS['db']->query("SELECT * FROM classes");
 	while ($row = $GLOBALS['db']->fetch_row($stuffqry, MYSQL_ASSOC)) $_SESSION['classes'][strtolower($row['singular'])] = $row;
 }
-
 if (!isset($_SESSION['db_enums'])) {
 	$enum_tables = array("badgestatus", "badgetypes", "merchtypes", "paytypes", "reftypes", "attrtypes", "cons");
 	foreach($enum_tables as $table) {
-		$enumqry = $GLOBALS['db']->query("SELECT * FROM $table");
+		$enumqry = $GLOBALS['db']->query("SELECT * FROM $table" . (strcmp($table, "badgetypes") ? '' : " ORDER BY name ASC"));
 		while ($row = $GLOBALS['db']->fetch_row($enumqry, MYSQL_ASSOC)) {
 			$_SESSION['db_enums'][$table][$row['id']] = $row;
 			unset($_SESSION['db_enums'][$table][$row['id']]['id']);

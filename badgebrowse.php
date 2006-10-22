@@ -46,7 +46,7 @@ table {
 <h1>Badge Browser</h1>
 <?php
 if ($_GET['btype']) {
-	$badgeqry = $GLOBALS['db']->query("SELECT CAs.id, CAs.first, CAs.middle, CAs.last, badges.badgeno, badges.status, badges.price FROM CAs INNER JOIN badges ON CAs.id = badges.ca WHERE badges.con = {$_SESSION['conid']} AND badges.type = {$_GET['btype']} ORDER BY badgeno");
+	$badgeqry = $GLOBALS['db']->query("SELECT CAs.id, CAs.first, CAs.middle, CAs.last, badges.badgeno, badges.status, badges.price FROM CAs INNER JOIN badges ON CAs.id = badges.ca WHERE badges.con = {$_SESSION['conid']} AND badges.type = {$_GET['btype']} ORDER BY CAs.last, CAs.first");
 ?>
 <table>
 <tr><th>Badge Number</th><th>Owner</th><th>Status</th><th>Price</th></tr>
@@ -61,9 +61,9 @@ else {
 <table>
 <tr><th>Badge Type</th><th>Count</th><th>Total</th></tr>
 <?php
-$countqry = $GLOBALS['db']->query("SELECT Count(badges.badgeno) AS NumOfBadges, badges.type AS BadgeType, SUM(badges.price) AS TypeTotal FROM badges WHERE con = {$_SESSION['conid']} GROUP BY badges.type ORDER BY NumOfBadges");
+$countqry = $GLOBALS['db']->query("SELECT Count(badges.badgeno) AS NumOfBadges, badges.type AS BadgeType, badgetypes.name AS BadgeTypeName, SUM(badges.price) AS TypeTotal FROM badges JOIN badgetypes on badges.type = badgetypes.id WHERE badges.con = {$_SESSION['conid']} GROUP BY badges.type ORDER BY BadgeTypeName");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {
-	echo "<tr><td><a href=\"badgebrowse.php?btype={$row['BadgeType']}\">" . $_SESSION['db_enums']['badgetypes'][$row['BadgeType']]['name'] . "</a></td><td>{$row['NumOfBadges']}</td><td>\${$row['TypeTotal']}</td></tr>\n";
+	echo "<tr><td><a href=\"badgebrowse.php?btype={$row['BadgeType']}\">" . $row['BadgeTypeName'] . "</a></td><td>{$row['NumOfBadges']}</td><td>\${$row['TypeTotal']}</td></tr>\n";
 }
 $countqry = $GLOBALS['db']->query("SELECT Count(badges.badgeno) AS NumOfBadges, SUM(badges.price) as Total FROM badges where con = {$_SESSION['conid']} ORDER BY NumOfBadges");
 while($row = $GLOBALS['db']->fetch_row($countqry)) {

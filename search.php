@@ -34,7 +34,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['badgeno'] && is_numeric(
 }
 
 if (isset($_SESSION['namesearch'])) {
-	$caqry = $GLOBALS['db']->query("SELECT id, first, middle, last FROM CAs WHERE first LIKE '%{$_SESSION['namesearch']}%' OR last LIKE '%{$_SESSION['namesearch']}%' ORDER BY last");
+	$caqry = $GLOBALS['db']->query("SELECT id, first, middle, last FROM CAs WHERE CONCAT_WS('', first, middle, last, nick) LIKE '%{$_SESSION['namesearch']}%' ORDER BY last");
 }
 ?>
 
