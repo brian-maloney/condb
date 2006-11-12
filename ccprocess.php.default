@@ -158,7 +158,7 @@ elseif ($add) {
     <tr>
       <td style="vertical-align: top;"><input type="hidden" name="new_ca_id" value="<?php echo $newca->obj_id ?>"><input type="hidden" name="editobj_ca_<?php echo $newca->obj_id ?>" value="true"><?php echo $newca->textbox("first", 12); echo $newca->textbox("middle", 2); echo $newca->textbox("last", 16);?></td>
       <td style="vertical-align: top;"><input type="hidden" name="editobj_badge_<?php echo $newbadge->obj_id ?>" value="true"><?php echo $newbadge->hidden("ca") . $newbadge->hidden("status") ?><select name="badge_<?php echo $newbadge->obj_id ?>_type" size="1">
-<?php foreach ($valid_btypes as $curbtype) echo "<option value=\"$curbtype\">" . $_SESSION['db_enums']['badgetypes'][$curbtype][name] . "</option>\n" ?>
+<?php foreach ($valid_btypes as $curbtype) echo "<option value=\"$curbtype\">" . $_SESSION['db_enums']['badgetypes'][$curbtype][name] . ' - $' . $_SESSION['db_enums']['badgetypes'][$curbtype][price] . "</option>\n" ?>
 </select></td>
       <td style="vertical-align: top;"><?php echo $newca->textbox("age", 4) ?></td>
     </tr>
